@@ -33,7 +33,7 @@ public class UsuarioForm {
 
   @NotBlank(message = "Campo e-mail é obrigatório")
   @Email(message = "Campo e-mail precisa ser válido")
-  @Length(min = 5, max = 50)
+  @Length(min = 5, max = 50, message = "Campo e-mail precisar ter entre 5 e 50 caracteres")
   private String email;
 
   @NotBlank(message = "Campo senha é obrigatório")

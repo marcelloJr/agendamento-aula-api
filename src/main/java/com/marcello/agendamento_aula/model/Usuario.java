@@ -30,15 +30,16 @@ public class Usuario {
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long id;
 
-  @Column(length = 50)
+  @Column(length = 50, nullable = false)
   private String nome;
 
-  @Column(name = "data_nascimento")
+  @Column(name = "data_nascimento", nullable = false)
   private LocalDate dataNascimento;
 
-  @Column(length = 50, unique = true)
+  @Column(length = 50, unique = true, nullable = false)
   private String email;
 
+  @Column(nullable = false)
   private String senha;
 
   @OneToOne(mappedBy = "usuario")
@@ -49,10 +50,10 @@ public class Usuario {
   private Professor professor;
 
   @CreationTimestamp
-  private LocalDateTime created_at;
+  private LocalDateTime createdAt;
 
   @UpdateTimestamp
-  private LocalDateTime updated_at;
+  private LocalDateTime updatedAt;
 
   public Usuario(String nome, LocalDate dataNascimento, String email, String senha) {
     this.nome = nome;
@@ -61,7 +62,7 @@ public class Usuario {
     this.senha = senha;
   }
 
-  public UsuarioDto converter() {
+  public UsuarioDto converterDto() {
     return new UsuarioDto(this);
   }
 }

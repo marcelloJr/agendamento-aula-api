@@ -32,7 +32,7 @@ public class UsuarioController {
       Usuario usuario = service.save(payload);
       URI uri = uriBuilder.path("/usuario/{id}").buildAndExpand(usuario.getId()).toUri();
 
-      return ResponseEntity.created(uri).body(usuario.converter()); 
+      return ResponseEntity.created(uri).body(usuario.converterDto()); 
     }
 
     return ResponseEntity.badRequest().body(new MensagemErroDto("Email já cadastrado"));

@@ -10,9 +10,9 @@ import lombok.Setter;
 @Getter
 @AllArgsConstructor
 public class AuthDto {
-  @NotBlank(message = "E-mail {is.required}")
+  @NotBlank(message = "O campo e-mail é obrigatório")
   private String email;
 
-  @NotBlank(message = "Senha {is.required}")
+  @NotBlank(message = "O campo senha é obrigatório")
   private String senha;
 }

@@ -29,14 +29,14 @@ public class Disciplina {
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long id;
   
-  @Column(length = 50, unique = true)
+  @Column(length = 50, unique = true, nullable = false)
   private String nome;
 
   @CreationTimestamp
-  private LocalDateTime created_at;
+  private LocalDateTime createdAt;
 
   @UpdateTimestamp
-  private LocalDateTime updated_at;
+  private LocalDateTime updatedAt;
 
   @ManyToMany(mappedBy = "disciplinas")
   @JsonBackReference
@@ -46,7 +46,7 @@ public class Disciplina {
     this.setNome(nome);
   }
 
-  public DisciplinaDto converter() {
+  public DisciplinaDto converterToDto() {
     return new DisciplinaDto(this);
   }
 

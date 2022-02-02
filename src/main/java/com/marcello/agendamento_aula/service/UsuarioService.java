@@ -5,11 +5,7 @@ import java.util.Optional;
 
 import com.marcello.agendamento_aula.dto.AuthDto;
 import com.marcello.agendamento_aula.form.UsuarioForm;
-import com.marcello.agendamento_aula.model.Aluno;
-import com.marcello.agendamento_aula.model.Professor;
 import com.marcello.agendamento_aula.model.Usuario;
-import com.marcello.agendamento_aula.repository.AlunoRepository;
-import com.marcello.agendamento_aula.repository.ProfessorRepository;
 import com.marcello.agendamento_aula.repository.UsuarioRepository;
 import com.marcello.agendamento_aula.unum.TipoUsuario;
 
@@ -19,14 +15,15 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class UsuarioService {
+  
   @Autowired
   private UsuarioRepository usuarioRepository;
 
   @Autowired
-  private AlunoRepository alunoRepository;  
+  private AlunoService alunoService;  
 
   @Autowired
-  private ProfessorRepository professorRepository;
+  private ProfessorService professorService;
 
   @Autowired
   private PasswordEncoder encoder;
@@ -37,9 +34,9 @@ public class UsuarioService {
     Usuario usuario = usuarioRepository.save(usuarioForm.converter());
 
     if(usuarioForm.getTipoUsuario().equals(TipoUsuario.ALUNO)) {
-      alunoRepository.save(new Aluno(usuario));
+      alunoService.save(usuario);
     } else if (usuarioForm.getTipoUsuario().equals(TipoUsuario.PROFESSOR)) {
-      professorRepository.save(new Professor(usuario));
+      professorService.save(usuario);
     }
 
     return usuario;

@@ -32,7 +32,7 @@ public class Professor {
   private Long id;
 
   @OneToOne(cascade = CascadeType.MERGE)
-  @JoinColumn(name = "usuario_id", referencedColumnName = "id")
+  @JoinColumn(name = "usuario_id", referencedColumnName = "id", nullable = false)
   @JsonManagedReference
   private Usuario usuario;
   
@@ -55,7 +55,7 @@ public class Professor {
     this.setDisciplinas(professorDisciplinaForm.getDisciplinas().stream().map(Disciplina::new).collect(Collectors.toSet()));
   }
 
-  public ProfessorDto converter() {
+  public ProfessorDto converterToDto() {
 		return new ProfessorDto(this);
   }
 
