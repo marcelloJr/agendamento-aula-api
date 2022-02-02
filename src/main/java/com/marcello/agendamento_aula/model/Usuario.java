@@ -1,4 +1,4 @@
-package com.marcello.agendamento_aula.models;
+package com.marcello.agendamento_aula.model;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -9,6 +9,9 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToOne;
+
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.marcello.agendamento_aula.dto.UsuarioDto;
 
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
@@ -42,6 +45,7 @@ public class Usuario {
   private Aluno aluno;
 
   @OneToOne(mappedBy = "usuario")
+  @JsonBackReference
   private Professor professor;
 
   @CreationTimestamp
@@ -55,5 +59,9 @@ public class Usuario {
     this.dataNascimento = dataNascimento;
     this.email = email;
     this.senha = senha;
+  }
+
+  public UsuarioDto converter() {
+    return new UsuarioDto(this);
   }
 }

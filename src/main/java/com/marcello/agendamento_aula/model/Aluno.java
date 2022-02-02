@@ -1,4 +1,4 @@
-package com.marcello.agendamento_aula.models;
+package com.marcello.agendamento_aula.model;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;

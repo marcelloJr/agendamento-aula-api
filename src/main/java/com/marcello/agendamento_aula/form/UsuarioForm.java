@@ -8,8 +8,8 @@ import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 
-import com.marcello.agendamento_aula.models.Usuario;
-import com.marcello.agendamento_aula.unums.TipoUsuario;
+import com.marcello.agendamento_aula.model.Usuario;
+import com.marcello.agendamento_aula.unum.TipoUsuario;
 
 import org.hibernate.validator.constraints.Length;
 
@@ -22,22 +22,22 @@ import lombok.Setter;
 @NoArgsConstructor
 public class UsuarioForm {
 
-  @NotBlank(message = "Nome {not.blank}")
+  @NotBlank(message = "Campo nome é obrigatório")
   @Length(min = 5, max = 50)
   private String nome;
 
-  @NotNull(message = "Data de nascimento {not.blank}")
+  @NotNull(message = "Campo data de nascimento é obrigatório")
   private LocalDate dataNascimento;
 
-  @NotBlank(message = "E-mail {not.blank}")
-  @Email(message = "E-mail {not.valid}")
+  @NotBlank(message = "Campo e-mail é obrigatório")
+  @Email(message = "Campo e-mail precisa ser válido")
   @Length(min = 5, max = 50)
   private String email;
 
-  @NotBlank(message = "Senha {not.blank}")
+  @NotBlank(message = "Campo senha é obrigatório")
   private String senha;
 
-  @NotNull(message = "Tipo de usuário {not.blank}")
+  @NotNull(message = "Campo tipo de usuário é obrigatório")
   @Enumerated(EnumType.STRING)
   private TipoUsuario tipoUsuario;
 
