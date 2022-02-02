@@ -31,7 +31,7 @@ public class Professor {
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long id;
 
-  @OneToOne(cascade = CascadeType.ALL)
+  @OneToOne(cascade = CascadeType.MERGE)
   @JoinColumn(name = "usuario_id", referencedColumnName = "id")
   @JsonManagedReference
   private Usuario usuario;

@@ -13,6 +13,7 @@ import com.marcello.agendamento_aula.unum.TipoUsuario;
 
 import org.hibernate.validator.constraints.Length;
 
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -20,6 +21,7 @@ import lombok.Setter;
 @Getter
 @Setter
 @NoArgsConstructor
+@AllArgsConstructor
 public class UsuarioForm {
 
   @NotBlank(message = "Campo nome é obrigatório")

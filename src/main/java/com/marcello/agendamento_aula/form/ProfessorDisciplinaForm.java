@@ -8,11 +8,13 @@ import javax.validation.constraints.NotNull;
 import com.marcello.agendamento_aula.model.Professor;
 import com.marcello.agendamento_aula.model.Usuario;
 
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
 
 @Getter
 @Setter
+@AllArgsConstructor
 public class ProfessorDisciplinaForm {
   @NotNull(message = "O campo professor é obrigatório")
   @Min(value = 1, message = "O campo professor deve ser válido")
