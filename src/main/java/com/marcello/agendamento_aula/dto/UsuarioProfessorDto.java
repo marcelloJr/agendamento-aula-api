@@ -2,6 +2,8 @@ package com.marcello.agendamento_aula.dto;
 
 import com.marcello.agendamento_aula.model.Professor;
 
+import org.springframework.data.domain.Page;
+
 import lombok.Getter;
 import lombok.Setter;
 
@@ -16,5 +18,9 @@ public class UsuarioProfessorDto {
     this.setNome(professor.getUsuario().getNome());
     this.setEmail(professor.getUsuario().getEmail());
     this.setId(professor.getId());
+  }
+  
+  public static Page<UsuarioProfessorDto> convertToPage(Page<Professor> professores) {
+    return professores.map(UsuarioProfessorDto::new);
   }
 }

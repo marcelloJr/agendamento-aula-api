@@ -1,5 +1,6 @@
 package com.marcello.agendamento_aula.service;
 
+import java.util.List;
 import java.util.Optional;
 
 import com.marcello.agendamento_aula.dto.AuthDto;
@@ -42,6 +43,12 @@ public class UsuarioService {
     }
 
     return usuario;
+  }
+
+  public void saveAll(List<UsuarioForm> usuarioForm) {
+    usuarioForm.stream().forEach(v -> {
+      this.save(v);
+    });
   }
 
   public Boolean validateUniqueEmail(String email) {

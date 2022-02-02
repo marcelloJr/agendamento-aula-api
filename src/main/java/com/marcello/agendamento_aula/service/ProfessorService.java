@@ -10,6 +10,8 @@ import com.marcello.agendamento_aula.model.Usuario;
 import com.marcello.agendamento_aula.repository.ProfessorRepository;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -19,6 +21,22 @@ public class ProfessorService {
 
   public ProfessorDto save(ProfessorDisciplinaForm professorDisciplinaForm, Usuario usuario) {
     return professorRepository.save(professorDisciplinaForm.converter(usuario)).converter();
+  }
+
+  public Page<Professor> getAll(String nome, List<Long> disciplinas, Pageable paginacao) {
+    if(nome != null && disciplinas == null) {
+      return professorRepository.findByUsuarioNomeContains(nome, paginacao);
+    }
+
+    if(nome == null && disciplinas != null) {
+      return professorRepository.findByDisciplinasIdIn(disciplinas, paginacao);
+    }
+
+    if(nome != null && disciplinas != null) {
+      return professorRepository.findByUsuarioNomeContainsAndDisciplinasIdIn(nome, disciplinas, paginacao);
+    }
+
+    return professorRepository.findAll(paginacao);
   }
 
   public List<Professor> getAll() {

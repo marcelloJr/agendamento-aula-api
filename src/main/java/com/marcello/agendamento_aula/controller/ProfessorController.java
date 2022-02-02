@@ -3,8 +3,6 @@ package com.marcello.agendamento_aula.controller;
 import java.net.URI;
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
-
 import javax.transaction.Transactional;
 import javax.validation.Valid;
 
@@ -18,12 +16,17 @@ import com.marcello.agendamento_aula.service.DisciplinaService;
 import com.marcello.agendamento_aula.service.ProfessorService;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort.Direction;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.util.UriComponentsBuilder;
 
@@ -59,9 +62,15 @@ public class ProfessorController {
   }
 
   @GetMapping
-	public ResponseEntity<List<UsuarioProfessorDto>> getAll() {
-		List<UsuarioProfessorDto> professores = service.getAll().stream().map(UsuarioProfessorDto::new).collect(Collectors.toList());
-    return ResponseEntity.ok(professores);
+	public Page<UsuarioProfessorDto> getAll(
+    @RequestParam(required = false) String nome,
+    @RequestParam(required = false) List<Long> disciplinas,
+    @PageableDefault(sort = "usuario.nome", direction = Direction.ASC, page = 0, size = 10) Pageable paginacao
+  ) {
+    
+    Page<Professor> professores = service.getAll(nome, disciplinas, paginacao);
+
+    return UsuarioProfessorDto.convertToPage(professores);
 	}
 
   @GetMapping("/{id}")
