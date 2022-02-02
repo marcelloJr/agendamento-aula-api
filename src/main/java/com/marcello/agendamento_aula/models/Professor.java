@@ -9,11 +9,13 @@ import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Entity
 @Getter
 @Setter
+@NoArgsConstructor
 public class Professor {
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -22,4 +24,8 @@ public class Professor {
   @OneToOne(cascade = CascadeType.ALL)
   @JoinColumn(name = "usuario_id", referencedColumnName = "id")
   private Usuario usuario;
+
+  public Professor(Usuario usuario) {
+    this.setUsuario(usuario);
+  }
 }
