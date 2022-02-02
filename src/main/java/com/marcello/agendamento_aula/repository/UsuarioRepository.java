@@ -2,7 +2,7 @@ package com.marcello.agendamento_aula.repository;
 
 import java.util.Optional;
 
-import com.marcello.agendamento_aula.models.Usuario;
+import com.marcello.agendamento_aula.model.Usuario;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 

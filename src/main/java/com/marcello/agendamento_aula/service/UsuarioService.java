@@ -4,13 +4,13 @@ import java.util.Optional;
 
 import com.marcello.agendamento_aula.dto.AuthDto;
 import com.marcello.agendamento_aula.form.UsuarioForm;
-import com.marcello.agendamento_aula.models.Aluno;
-import com.marcello.agendamento_aula.models.Professor;
-import com.marcello.agendamento_aula.models.Usuario;
+import com.marcello.agendamento_aula.model.Aluno;
+import com.marcello.agendamento_aula.model.Professor;
+import com.marcello.agendamento_aula.model.Usuario;
 import com.marcello.agendamento_aula.repository.AlunoRepository;
 import com.marcello.agendamento_aula.repository.ProfessorRepository;
 import com.marcello.agendamento_aula.repository.UsuarioRepository;
-import com.marcello.agendamento_aula.unums.TipoUsuario;
+import com.marcello.agendamento_aula.unum.TipoUsuario;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;

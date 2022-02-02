@@ -1,7 +1,8 @@
 package com.marcello.agendamento_aula.dto;
 
 import java.time.LocalDate;
-import com.marcello.agendamento_aula.models.Usuario;
+
+import com.marcello.agendamento_aula.model.Usuario;
 
 import lombok.Getter;
 import lombok.Setter;

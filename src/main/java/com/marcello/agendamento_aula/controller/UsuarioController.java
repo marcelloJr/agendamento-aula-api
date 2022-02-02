@@ -6,9 +6,8 @@ import javax.transaction.Transactional;
 import javax.validation.Valid;
 
 import com.marcello.agendamento_aula.dto.MensagemErroDto;
-import com.marcello.agendamento_aula.dto.UsuarioDto;
 import com.marcello.agendamento_aula.form.UsuarioForm;
-import com.marcello.agendamento_aula.models.Usuario;
+import com.marcello.agendamento_aula.model.Usuario;
 import com.marcello.agendamento_aula.service.UsuarioService;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,7 +32,7 @@ public class UsuarioController {
       Usuario usuario = service.save(payload);
       URI uri = uriBuilder.path("/usuario/{id}").buildAndExpand(usuario.getId()).toUri();
 
-      return ResponseEntity.created(uri).body(new UsuarioDto(usuario)); 
+      return ResponseEntity.created(uri).body(usuario.converter()); 
     }
 
     return ResponseEntity.badRequest().body(new MensagemErroDto("Email já cadastrado"));
