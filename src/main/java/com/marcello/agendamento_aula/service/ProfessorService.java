@@ -16,11 +16,16 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class ProfessorService {
+  
   @Autowired
   private ProfessorRepository professorRepository;
 
   public ProfessorDto save(ProfessorDisciplinaForm professorDisciplinaForm, Usuario usuario) {
-    return professorRepository.save(professorDisciplinaForm.converter(usuario)).converter();
+    return professorRepository.save(professorDisciplinaForm.converter(usuario)).converterToDto();
+  }
+
+  public Professor save(Usuario usuario) {
+    return professorRepository.save(new Professor(usuario));
   }
 
   public Page<Professor> getAll(String nome, List<Long> disciplinas, Pageable paginacao) {

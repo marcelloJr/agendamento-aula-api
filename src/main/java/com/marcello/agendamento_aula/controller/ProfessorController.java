@@ -39,28 +39,6 @@ public class ProfessorController {
   @Autowired
   private DisciplinaService disciplinaService;
 
-  @PostMapping(value = "/disciplinas")
-  @Transactional
-  public ResponseEntity<?> saveSubjects(@RequestBody @Valid ProfessorDisciplinaForm payload, UriComponentsBuilder uriBuilder) {
-    Optional<Professor> professorValido = service.getById(payload.getProfessor());
-
-    if(professorValido.isPresent()){
-      Long subjectId = disciplinaService.validateSubjects(payload.getDisciplinas());
-      
-      if(subjectId > 0) {
-        return ResponseEntity.badRequest().body(new MensagemErroDto("Disciplina com id " + subjectId + " não existe"));  
-      }
-
-      ProfessorDto professorDto = service.save(payload, professorValido.get().getUsuario());
-
-      URI uri = uriBuilder.path("/professor/disciplinas/{id}").buildAndExpand(professorDto.getId()).toUri();
-      return ResponseEntity.created(uri).body(professorDto);
-
-    }
-
-    return ResponseEntity.badRequest().body(new MensagemErroDto("O campo professor deve ser válido"));    
-  }
-
   @GetMapping
 	public Page<UsuarioProfessorDto> getAll(
     @RequestParam(required = false) String nome,
@@ -83,4 +61,26 @@ public class ProfessorController {
 		
 		return ResponseEntity.notFound().build();
 	}
+
+  @PostMapping(value = "/disciplinas")
+  @Transactional
+  public ResponseEntity<?> saveSubjects(@RequestBody @Valid ProfessorDisciplinaForm payload, UriComponentsBuilder uriBuilder) {
+    Optional<Professor> professorValido = service.getById(payload.getProfessor());
+
+    if(professorValido.isPresent()){
+      Long subjectId = disciplinaService.validateSubjects(payload.getDisciplinas());
+      
+      if(subjectId > 0) {
+        return ResponseEntity.badRequest().body(new MensagemErroDto("Disciplina com id " + subjectId + " não existe"));  
+      }
+
+      ProfessorDto professorDto = service.save(payload, professorValido.get().getUsuario());
+
+      URI uri = uriBuilder.path("/professor/disciplinas/{id}").buildAndExpand(professorDto.getId()).toUri();
+      return ResponseEntity.created(uri).body(professorDto);
+
+    }
+
+    return ResponseEntity.badRequest().body(new MensagemErroDto("O campo professor deve ser válido"));    
+  }
 }

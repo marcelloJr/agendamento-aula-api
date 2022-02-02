@@ -33,7 +33,7 @@ public class DisciplinaController {
 		Optional<Disciplina> disciplina = service.getById(id);
 
 		if (disciplina.isPresent()) {
-			return ResponseEntity.ok(disciplina.get().converter());
+			return ResponseEntity.ok(disciplina.get().converterToDto());
 		}
 		
 		return ResponseEntity.notFound().build();
