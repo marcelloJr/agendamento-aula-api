@@ -8,6 +8,7 @@ import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 
+import com.marcello.agendamento_aula.controller.unum.Role;
 import com.marcello.agendamento_aula.controller.unum.TipoUsuario;
 import com.marcello.agendamento_aula.model.Usuario;
 
@@ -50,6 +51,14 @@ public class UsuarioForm {
   }
 
   public Usuario converter() {
-		return new Usuario(this.getNome(), this.getDataNascimento(), this.getEmail(), this.getSenha());
+    Role role;
+    
+    if(this.getTipoUsuario().equals(TipoUsuario.ALUNO)) {
+      role = Role.ROLE_ALUNO;
+    } else {
+      role = Role.ROLE_PROFESSOR;
+    }
+
+		return new Usuario(this.getNome(), this.getDataNascimento(), this.getEmail(), this.getSenha(), role);
 	}
 }

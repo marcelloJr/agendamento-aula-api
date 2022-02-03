@@ -14,4 +14,6 @@ public interface ProfessorRepository extends JpaRepository<Professor, Long> {
   Page<Professor> findByDisciplinasIdIn(List<Long> disciplinas, Pageable paginacao);
 
   Page<Professor> findByUsuarioNomeContainsAndDisciplinasIdIn(String usuarioNome, List<Long> disciplinas, Pageable paginacao);
+
+  Professor findByUsuarioId(Long id);
 }

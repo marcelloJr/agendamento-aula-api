@@ -12,9 +12,6 @@ import lombok.Setter;
 @Getter
 @Setter
 public class AgendamentoForm {
-  @NotNull(message = "O campo aluno é obrigatório")
-  private Long aluno;
-
   @NotNull(message = "O campo professor é obrigatório")
   private Long professor;
 

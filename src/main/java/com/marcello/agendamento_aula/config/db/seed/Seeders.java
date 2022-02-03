@@ -13,6 +13,7 @@ import com.marcello.agendamento_aula.controller.form.ProfessorDisciplinaForm;
 import com.marcello.agendamento_aula.controller.form.UsuarioForm;
 import com.marcello.agendamento_aula.model.Disciplina;
 import com.marcello.agendamento_aula.repository.DisciplinaRepository;
+import com.marcello.agendamento_aula.service.AlunoService;
 import com.marcello.agendamento_aula.service.ProfessorService;
 import com.marcello.agendamento_aula.service.UsuarioService;
 
@@ -33,10 +34,14 @@ public class Seeders {
   @Autowired
   private ProfessorService professorService;
 
+  @Autowired
+  private AlunoService alunoService;
+
 
   @EventListener
   public void seed(ContextRefreshedEvent event) {
     this.disciplinaSeed();
+    this.alunoSeed();
     this.professorSeed();
   }
 
@@ -49,17 +54,23 @@ public class Seeders {
     }
   }
 
+  public void alunoSeed() {
+    if(alunoService.getAll().isEmpty()) {
+      usuarioService.save(new UsuarioForm("Aluno 01", LocalDate.of(2000, 10, 10), "aluno01@gmail.com", "aluno01@123", TipoUsuario.ALUNO));
+    }
+  }
+
   public void professorSeed() {
     if(professorService.getAll().isEmpty()) {
-      List<UsuarioForm> usuarios = new ArrayList<UsuarioForm>();
+      List<UsuarioForm> professores = new ArrayList<UsuarioForm>();
       
       for(int i = 1; i <= 20; i++){
-        usuarios.add(new UsuarioForm("Professor 0" + i, LocalDate.of(1970 + i, 1, i), "professor0"+ i +"@gmail.com", "professor0"+ i +"@123", TipoUsuario.PROFESSOR));
+        professores.add(new UsuarioForm("Professor 0" + i, LocalDate.of(1970 + i, 1, i), "professor0"+ i +"@gmail.com", "professor0"+ i +"@123", TipoUsuario.PROFESSOR));
       }
   
-      usuarioService.saveAll(usuarios);
+      usuarioService.saveAll(professores);
 
-      professorService.getAll().stream().forEach(v -> {
+      professorService.getAll().stream().forEach(professor -> {
         Set<Long> disciplinas = new HashSet<Long>();
 
         Long disciplina01 = Math.round(Math.random() * 10) + 1;
@@ -68,7 +79,7 @@ public class Seeders {
         disciplinas.add(disciplina01);
         disciplinas.add(disciplina02);
 
-        professorService.save(new ProfessorDisciplinaForm(v.getId(), disciplinas), v.getUsuario());
+        professorService.save(new ProfessorDisciplinaForm(disciplinas), professor.getId(), professor.getUsuario());
       });
     }
   }

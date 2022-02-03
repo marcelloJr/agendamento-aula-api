@@ -20,8 +20,8 @@ public class ProfessorService {
   @Autowired
   private ProfessorRepository professorRepository;
 
-  public ProfessorDto save(ProfessorDisciplinaForm professorDisciplinaForm, Usuario usuario) {
-    return professorRepository.save(professorDisciplinaForm.converter(usuario)).converterToDto();
+  public ProfessorDto save(ProfessorDisciplinaForm professorDisciplinaForm, Long professorId, Usuario usuario) {
+    return professorRepository.save(professorDisciplinaForm.converter(professorId, usuario)).converterToDto();
   }
 
   public Professor save(Usuario usuario) {
@@ -52,4 +52,7 @@ public class ProfessorService {
     return professorRepository.findById(id);
   }
 
+  public Professor getTeacherByUser(Long id) {
+    return professorRepository.findByUsuarioId(id);
+  }
 }

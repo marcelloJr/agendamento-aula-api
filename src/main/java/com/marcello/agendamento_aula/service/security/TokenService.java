@@ -4,39 +4,43 @@ import java.util.Date;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.Authentication;
-import org.springframework.stereotype.Service;
+import org.springframework.stereotype.Component;
 
 import com.marcello.agendamento_aula.model.Usuario;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 
-@Service
+@Component
 public class TokenService {
 	
-	@Value("${forum.jwt.expiration}")
-	private String expiration;
+	@Value("${jwt.expiration}")
+	public long EXPIRATION;
 	
-	@Value("${forum.jwt.secret}")
-	private String secret;
+	@Value("${jwt.secret}")
+	public String SECRET_KEY;
+
+	@Value("${jwt.auth.key}")
+	public String AUTH_KEY;
 
 	public String generateToken(Authentication authentication) {
-		Usuario logado = (Usuario) authentication.getPrincipal();
-		Date hoje = new Date();
-		Date dataExpiracao = new Date(hoje.getTime() + Long.parseLong(expiration));
+		Usuario usuario = (Usuario) authentication.getPrincipal();
+		Date now = new Date();
+		Date expirationDate = new Date(now.getTime() + this.EXPIRATION);
 		
 		return Jwts.builder()
-				.setIssuer("API do Fórum da Alura")
-				.setSubject(logado.getId().toString())
-				.setIssuedAt(hoje)
-				.setExpiration(dataExpiracao)
-				.signWith(SignatureAlgorithm.HS256, secret)
+				.setIssuer(usuario.getNome())
+				.setSubject(usuario.getId().toString())
+				// .claim(AUTH_KEY, usuario.getPerfil().toString())
+				.setIssuedAt(now)
+				.setExpiration(expirationDate)
+				.signWith(SignatureAlgorithm.HS256, this.SECRET_KEY)
 				.compact();
 	}
 	
 	public boolean isValidToken(String token) {
 		try {
-			Jwts.parser().setSigningKey(this.secret).parseClaimsJws(token);
+			Jwts.parser().setSigningKey(this.SECRET_KEY).parseClaimsJws(token);
 			return true;
 		} catch (Exception e) {
 			return false;
@@ -44,7 +48,7 @@ public class TokenService {
 	}
 
 	public Long getIdUsuario(String token) {
-		Claims claims = Jwts.parser().setSigningKey(this.secret).parseClaimsJws(token).getBody();
+		Claims claims = Jwts.parser().setSigningKey(this.SECRET_KEY).parseClaimsJws(token).getBody();
 		return Long.parseLong(claims.getSubject());
 	}
 }

@@ -5,7 +5,11 @@ import java.time.LocalTime;
 import java.util.Optional;
 
 import com.marcello.agendamento_aula.model.Agendamento;
+import com.marcello.agendamento_aula.model.Aluno;
+import com.marcello.agendamento_aula.model.Professor;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -29,4 +33,8 @@ public interface AgendamentoRepository extends JpaRepository<Agendamento, Long> 
     @Param("hora_fim") LocalTime horaFim,
     @Param("professor_id") Long professorId
   );
+
+  Page<Agendamento> findByAluno(Aluno aluno, Pageable paginacao);
+
+  Page<Agendamento> findByProfessor(Professor professor, Pageable paginacao);
 }
