@@ -6,6 +6,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
+import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -14,23 +15,26 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
-import com.marcello.agendamento_aula.repository.UsuarioRepository;
 
-@EnableWebSecurity
 @Configuration
+@EnableWebSecurity
+@EnableGlobalMethodSecurity(
+	securedEnabled = true,
+	jsr250Enabled = true,
+	prePostEnabled = true
+)
 public class SecurityConfigurations extends WebSecurityConfigurerAdapter {
 
 	@Autowired
 	private AuthenticationService authenticationService;
-	
-	@Autowired
-	private TokenService tokenService;
-	
-	@Autowired
-	private UsuarioRepository usuarioRepository;
 
 	@Autowired
 	private AuthEntryPointJwt authEntryPointJwt;
+
+	@Bean
+	public AuthenticationFilter authenticationFilter() {
+		return new AuthenticationFilter();
+	}
 	
 	@Override
 	@Bean
@@ -47,19 +51,21 @@ public class SecurityConfigurations extends WebSecurityConfigurerAdapter {
 	protected void configure(HttpSecurity http) throws Exception {
 		http
 			.cors()
-			.and()
-			.csrf().disable()
+				.and()
+			.csrf()
+				.disable()
+			.exceptionHandling()
+				.authenticationEntryPoint(authEntryPointJwt)
+				.and()
+			.sessionManagement()
+				.sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+				.and()
 			.authorizeRequests()
-			.antMatchers(HttpMethod.POST, "/usuario").permitAll()
-			.antMatchers(HttpMethod.POST, "/login").permitAll()
-			.antMatchers(HttpMethod.GET, "/swagger-ui/**").permitAll()
-			.anyRequest().authenticated()
-			.and()
-			.exceptionHandling().authenticationEntryPoint(authEntryPointJwt)
-			.and()
-			.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
-			.and()
-			.addFilterBefore(new AuthenticationFilter(tokenService, usuarioRepository), UsernamePasswordAuthenticationFilter.class);
+			.antMatchers(HttpMethod.POST, "/usuario", "/login", "/swagger-ui/**").permitAll()
+			.anyRequest()
+				.authenticated()
+				.and()
+			.addFilterBefore(authenticationFilter(), UsernamePasswordAuthenticationFilter.class);
 	}
 	
 	@Override

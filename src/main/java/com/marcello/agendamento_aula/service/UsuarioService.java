@@ -6,6 +6,7 @@ import java.util.Optional;
 import com.marcello.agendamento_aula.controller.unum.TipoUsuario;
 import com.marcello.agendamento_aula.controller.form.AuthForm;
 import com.marcello.agendamento_aula.controller.form.UsuarioForm;
+import com.marcello.agendamento_aula.model.Aluno;
 import com.marcello.agendamento_aula.model.Usuario;
 import com.marcello.agendamento_aula.repository.UsuarioRepository;
 
@@ -60,5 +61,9 @@ public class UsuarioService {
     }
 
     return false;
+  }
+
+  public Usuario getById(Long id) {
+    return usuarioRepository.getById(id);
   }
 }

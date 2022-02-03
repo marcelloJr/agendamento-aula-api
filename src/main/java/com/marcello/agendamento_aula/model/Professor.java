@@ -49,11 +49,12 @@ public class Professor {
     this.setUsuario(usuario);
   }
 
-  public Professor(ProfessorDisciplinaForm professorDisciplinaForm, Usuario usuario) {
-    this.setId(professorDisciplinaForm.getProfessor());
+  public Professor(ProfessorDisciplinaForm professorDisciplinaForm, Long professorId, Usuario usuario) {
+    this.setId(professorId);
     this.setUsuario(usuario);
     this.setDisciplinas(professorDisciplinaForm.getDisciplinas().stream().map(Disciplina::new).collect(Collectors.toSet()));
   }
+  
 
   public ProfessorDto converterToDto() {
 		return new ProfessorDto(this);

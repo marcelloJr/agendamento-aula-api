@@ -8,6 +8,8 @@ import com.marcello.agendamento_aula.model.Professor;
 import com.marcello.agendamento_aula.repository.AgendamentoRepository;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -24,5 +26,13 @@ public class AgendamentoService {
     return agendamentoRepository.validaAgendamento(agendamentoForm.getData(), agendamentoForm.getHoraInicio(), 
       agendamentoForm.getHoraFim(), agendamentoForm.getProfessor()).isPresent();
   }
+
+  public Page<Agendamento> getAllStudentSchedule(Aluno aluno, Pageable paginacao) {
+    return agendamentoRepository.findByAluno(aluno, paginacao);
+  } 
+
+  public Page<Agendamento> getAllTeacherSchedule(Professor professor, Pageable paginacao) {
+    return agendamentoRepository.findByProfessor(professor, paginacao);
+  } 
 
 }

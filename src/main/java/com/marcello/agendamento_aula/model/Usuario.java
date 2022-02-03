@@ -6,13 +6,17 @@ import java.util.Collection;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToOne;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.marcello.agendamento_aula.controller.dto.UsuarioDetailDto;
 import com.marcello.agendamento_aula.controller.dto.UsuarioDto;
+import com.marcello.agendamento_aula.controller.unum.Role;
 
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
@@ -46,11 +50,15 @@ public class Usuario implements UserDetails {
   private String senha;
 
   @OneToOne(mappedBy = "usuario")
+  @JsonBackReference
   private Aluno aluno;
 
   @OneToOne(mappedBy = "usuario")
   @JsonBackReference
   private Professor professor;
+
+  @Enumerated(EnumType.STRING)
+  private Role perfil;
 
   @CreationTimestamp
   private LocalDateTime createdAt;
@@ -58,15 +66,20 @@ public class Usuario implements UserDetails {
   @UpdateTimestamp
   private LocalDateTime updatedAt;
 
-  public Usuario(String nome, LocalDate dataNascimento, String email, String senha) {
-    this.nome = nome;
-    this.dataNascimento = dataNascimento;
-    this.email = email;
-    this.senha = senha;
+  public Usuario(String nome, LocalDate dataNascimento, String email, String senha, Role perfil) {
+    this.setNome(nome);
+    this.setDataNascimento(dataNascimento);
+    this.setEmail(email);
+    this.setSenha(senha);
+    this.setPerfil(perfil);
   }
 
   public UsuarioDto converterDto() {
     return new UsuarioDto(this);
+  }
+
+  public UsuarioDetailDto converterDetailDto() {
+    return new UsuarioDetailDto(this);
   }
 
   @Override
