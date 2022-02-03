@@ -11,7 +11,7 @@ import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.marcello.agendamento_aula.dto.DisciplinaDto;
+import com.marcello.agendamento_aula.controller.dto.DisciplinaDto;
 
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;

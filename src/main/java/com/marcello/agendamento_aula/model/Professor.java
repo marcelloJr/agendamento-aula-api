@@ -14,9 +14,9 @@ import javax.persistence.ManyToMany;
 import javax.persistence.OneToOne;
 
 import com.fasterxml.jackson.annotation.JsonManagedReference;
-import com.marcello.agendamento_aula.dto.ProfessorDto;
-import com.marcello.agendamento_aula.dto.UsuarioProfessorDetailDto;
-import com.marcello.agendamento_aula.form.ProfessorDisciplinaForm;
+import com.marcello.agendamento_aula.controller.dto.ProfessorDto;
+import com.marcello.agendamento_aula.controller.dto.UsuarioProfessorDetailDto;
+import com.marcello.agendamento_aula.controller.form.ProfessorDisciplinaForm;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;

@@ -3,11 +3,11 @@ package com.marcello.agendamento_aula.service;
 import java.util.List;
 import java.util.Optional;
 
-import com.marcello.agendamento_aula.dto.AuthDto;
-import com.marcello.agendamento_aula.form.UsuarioForm;
+import com.marcello.agendamento_aula.controller.unum.TipoUsuario;
+import com.marcello.agendamento_aula.controller.form.AuthForm;
+import com.marcello.agendamento_aula.controller.form.UsuarioForm;
 import com.marcello.agendamento_aula.model.Usuario;
 import com.marcello.agendamento_aula.repository.UsuarioRepository;
-import com.marcello.agendamento_aula.unum.TipoUsuario;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -52,7 +52,7 @@ public class UsuarioService {
     return !usuarioRepository.findByEmail(email).isPresent();
   }
 
-  public Boolean authentication(AuthDto authDto) {
+  public Boolean authentication(AuthForm authDto) {
     Optional<Usuario> usuario = usuarioRepository.findByEmail(authDto.getEmail());
 
     if(usuario.isPresent()) {

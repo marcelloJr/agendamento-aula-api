@@ -5,8 +5,8 @@ import java.net.URI;
 import javax.transaction.Transactional;
 import javax.validation.Valid;
 
-import com.marcello.agendamento_aula.dto.MensagemErroDto;
-import com.marcello.agendamento_aula.form.UsuarioForm;
+import com.marcello.agendamento_aula.controller.dto.MensagemErroDto;
+import com.marcello.agendamento_aula.controller.form.UsuarioForm;
 import com.marcello.agendamento_aula.model.Usuario;
 import com.marcello.agendamento_aula.service.UsuarioService;
 

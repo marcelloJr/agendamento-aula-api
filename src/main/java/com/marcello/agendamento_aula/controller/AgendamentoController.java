@@ -7,9 +7,9 @@ import java.util.Optional;
 import javax.transaction.Transactional;
 import javax.validation.Valid;
 
-import com.marcello.agendamento_aula.dto.AgendamentoDto;
-import com.marcello.agendamento_aula.dto.MensagemErroDto;
-import com.marcello.agendamento_aula.form.AgendamentoForm;
+import com.marcello.agendamento_aula.controller.dto.AgendamentoDto;
+import com.marcello.agendamento_aula.controller.dto.MensagemErroDto;
+import com.marcello.agendamento_aula.controller.form.AgendamentoForm;
 import com.marcello.agendamento_aula.model.Aluno;
 import com.marcello.agendamento_aula.model.Professor;
 import com.marcello.agendamento_aula.service.AgendamentoService;

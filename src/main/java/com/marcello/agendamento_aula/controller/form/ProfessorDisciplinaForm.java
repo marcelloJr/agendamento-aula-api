@@ -1,4 +1,4 @@
-package com.marcello.agendamento_aula.form;
+package com.marcello.agendamento_aula.controller.form;
 
 import java.util.Set;
 

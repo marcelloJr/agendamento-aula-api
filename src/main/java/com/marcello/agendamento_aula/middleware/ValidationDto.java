@@ -1,4 +1,4 @@
-package com.marcello.agendamento_aula.dto;
+package com.marcello.agendamento_aula.middleware;
 
 public class ValidationDto {
   private String campo;

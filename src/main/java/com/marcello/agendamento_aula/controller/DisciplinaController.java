@@ -4,7 +4,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
-import com.marcello.agendamento_aula.dto.DisciplinaDto;
+import com.marcello.agendamento_aula.controller.dto.DisciplinaDto;
 import com.marcello.agendamento_aula.model.Disciplina;
 import com.marcello.agendamento_aula.service.DisciplinaService;
 
