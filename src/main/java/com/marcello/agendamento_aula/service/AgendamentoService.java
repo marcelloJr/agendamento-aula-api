@@ -1,11 +1,11 @@
 package com.marcello.agendamento_aula.service;
 
-import com.marcello.agendamento_aula.form.AgendamentoForm;
+import com.marcello.agendamento_aula.controller.unum.StatusAgendamento;
+import com.marcello.agendamento_aula.controller.form.AgendamentoForm;
 import com.marcello.agendamento_aula.model.Agendamento;
 import com.marcello.agendamento_aula.model.Aluno;
 import com.marcello.agendamento_aula.model.Professor;
 import com.marcello.agendamento_aula.repository.AgendamentoRepository;
-import com.marcello.agendamento_aula.unum.StatusAgendamento;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

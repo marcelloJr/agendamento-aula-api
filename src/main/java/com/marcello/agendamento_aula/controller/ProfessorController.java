@@ -6,11 +6,11 @@ import java.util.Optional;
 import javax.transaction.Transactional;
 import javax.validation.Valid;
 
-import com.marcello.agendamento_aula.dto.MensagemErroDto;
-import com.marcello.agendamento_aula.dto.ProfessorDto;
-import com.marcello.agendamento_aula.dto.UsuarioProfessorDetailDto;
-import com.marcello.agendamento_aula.dto.UsuarioProfessorDto;
-import com.marcello.agendamento_aula.form.ProfessorDisciplinaForm;
+import com.marcello.agendamento_aula.controller.dto.MensagemErroDto;
+import com.marcello.agendamento_aula.controller.dto.ProfessorDto;
+import com.marcello.agendamento_aula.controller.dto.UsuarioProfessorDetailDto;
+import com.marcello.agendamento_aula.controller.dto.UsuarioProfessorDto;
+import com.marcello.agendamento_aula.controller.form.ProfessorDisciplinaForm;
 import com.marcello.agendamento_aula.model.Professor;
 import com.marcello.agendamento_aula.service.DisciplinaService;
 import com.marcello.agendamento_aula.service.ProfessorService;

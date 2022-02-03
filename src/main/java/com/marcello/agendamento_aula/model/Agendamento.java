@@ -14,9 +14,9 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
-import com.marcello.agendamento_aula.dto.AgendamentoDto;
-import com.marcello.agendamento_aula.form.AgendamentoForm;
-import com.marcello.agendamento_aula.unum.StatusAgendamento;
+import com.marcello.agendamento_aula.controller.unum.StatusAgendamento;
+import com.marcello.agendamento_aula.controller.dto.AgendamentoDto;
+import com.marcello.agendamento_aula.controller.form.AgendamentoForm;
 
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;

@@ -1,4 +1,4 @@
-package com.marcello.agendamento_aula.seed;
+package com.marcello.agendamento_aula.config.db.seed;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -8,13 +8,13 @@ import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-import com.marcello.agendamento_aula.form.ProfessorDisciplinaForm;
-import com.marcello.agendamento_aula.form.UsuarioForm;
+import com.marcello.agendamento_aula.controller.unum.TipoUsuario;
+import com.marcello.agendamento_aula.controller.form.ProfessorDisciplinaForm;
+import com.marcello.agendamento_aula.controller.form.UsuarioForm;
 import com.marcello.agendamento_aula.model.Disciplina;
 import com.marcello.agendamento_aula.repository.DisciplinaRepository;
 import com.marcello.agendamento_aula.service.ProfessorService;
 import com.marcello.agendamento_aula.service.UsuarioService;
-import com.marcello.agendamento_aula.unum.TipoUsuario;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.event.ContextRefreshedEvent;

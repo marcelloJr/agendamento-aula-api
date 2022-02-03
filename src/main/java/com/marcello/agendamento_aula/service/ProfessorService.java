@@ -3,8 +3,8 @@ package com.marcello.agendamento_aula.service;
 import java.util.List;
 import java.util.Optional;
 
-import com.marcello.agendamento_aula.dto.ProfessorDto;
-import com.marcello.agendamento_aula.form.ProfessorDisciplinaForm;
+import com.marcello.agendamento_aula.controller.dto.ProfessorDto;
+import com.marcello.agendamento_aula.controller.form.ProfessorDisciplinaForm;
 import com.marcello.agendamento_aula.model.Professor;
 import com.marcello.agendamento_aula.model.Usuario;
 import com.marcello.agendamento_aula.repository.ProfessorRepository;

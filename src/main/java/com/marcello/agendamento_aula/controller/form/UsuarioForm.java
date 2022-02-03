@@ -1,4 +1,4 @@
-package com.marcello.agendamento_aula.form;
+package com.marcello.agendamento_aula.controller.form;
 
 import java.time.LocalDate;
 
@@ -8,8 +8,8 @@ import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 
+import com.marcello.agendamento_aula.controller.unum.TipoUsuario;
 import com.marcello.agendamento_aula.model.Usuario;
-import com.marcello.agendamento_aula.unum.TipoUsuario;
 
 import org.hibernate.validator.constraints.Length;
 

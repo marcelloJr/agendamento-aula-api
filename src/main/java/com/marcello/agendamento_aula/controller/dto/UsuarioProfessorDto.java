@@ -1,4 +1,4 @@
-package com.marcello.agendamento_aula.dto;
+package com.marcello.agendamento_aula.controller.dto;
 
 import com.marcello.agendamento_aula.model.Professor;
 
