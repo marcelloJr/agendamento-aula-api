@@ -30,14 +30,16 @@ public class AuthController {
 
   @PostMapping
   public ResponseEntity<?> authentication(@RequestBody @Valid AuthForm payload) {
+    
     UsernamePasswordAuthenticationToken dadosLogin = payload.converter();
+
     try {
 			Authentication authentication = authManager.authenticate(dadosLogin);
 			String token = tokenService.generateToken(authentication);
+
 			return ResponseEntity.ok(new TokenDto(token, "Bearer"));
 		} catch (AuthenticationException e) {
 			return ResponseEntity.badRequest().body(new MensagemErroDto("Usuário/senha inválido"));
 		}
   }
-  
 }

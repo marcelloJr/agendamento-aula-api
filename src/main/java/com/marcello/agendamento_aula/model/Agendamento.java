@@ -15,6 +15,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
 import com.marcello.agendamento_aula.controller.unum.StatusAgendamento;
+import com.marcello.agendamento_aula.controller.dto.AgendamentoDetailDto;
 import com.marcello.agendamento_aula.controller.dto.AgendamentoDto;
 import com.marcello.agendamento_aula.controller.form.AgendamentoForm;
 
@@ -51,8 +52,9 @@ public class Agendamento {
   @Column(nullable = false)
   private LocalTime horaFim;
   
-  @Column(length = 100)
-  private String observacao;
+  private String observacaoProfessor;
+
+  private String observacaoAluno;
 
   @CreationTimestamp
   private LocalDateTime createdAt;
@@ -69,11 +71,15 @@ public class Agendamento {
     this.setData(agendamentoForm.getData());
     this.setHoraInicio(agendamentoForm.getHoraInicio());
     this.setHoraFim(agendamentoForm.getHoraFim());
-    this.setObservacao(agendamentoForm.getObservacao());
+    this.setObservacaoAluno(agendamentoForm.getObservacao());
     this.setStatus(status);
   }
 
   public AgendamentoDto convertoToDto() {
     return new AgendamentoDto(this);
+  }
+
+  public AgendamentoDetailDto converterToAgendamentoDetailDto() {
+		return new AgendamentoDetailDto(this);
   }
 }

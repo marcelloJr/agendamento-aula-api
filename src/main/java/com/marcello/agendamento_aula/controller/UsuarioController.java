@@ -31,6 +31,7 @@ public class UsuarioController {
   @PostMapping(produces = "application/json")
   @Transactional
   public ResponseEntity<?> save(@RequestBody @Valid UsuarioForm payload, UriComponentsBuilder uriBuilder) {
+    
     if(service.validateUniqueEmail(payload.getEmail())) {
       Usuario usuario = service.save(payload);
       URI uri = uriBuilder.path("/usuario/{id}").buildAndExpand(usuario.getId()).toUri();
@@ -43,6 +44,7 @@ public class UsuarioController {
 
   @GetMapping("/meus-dados")
   public ResponseEntity<UsuarioDetailDto> me(@CurrentUser Usuario usuarioLogado) {
+
     UsuarioDetailDto usuario = service.getById(usuarioLogado.getId()).converterDetailDto();
 
     return ResponseEntity.ok().body(usuario);

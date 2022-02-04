@@ -58,6 +58,7 @@ public class ProfessorController {
   @PreAuthorize("hasRole('ALUNO')")
   @GetMapping("/{id}")
 	public ResponseEntity<UsuarioProfessorDetailDto> getById(@PathVariable Long id) {
+
     Optional<Professor> professor = service.getById(id);
 
 		if (professor.isPresent()) {
@@ -70,11 +71,13 @@ public class ProfessorController {
   @PreAuthorize("hasRole('PROFESSOR')")
   @PostMapping(value = "/disciplinas")
   @Transactional
-  public ResponseEntity<?> saveSubjects(@RequestBody @Valid ProfessorDisciplinaForm payload, 
-    UriComponentsBuilder uriBuilder, @CurrentUser Usuario usuarioLogado) {
+  public ResponseEntity<?> saveSubjects(
+    @RequestBody @Valid ProfessorDisciplinaForm payload, 
+    UriComponentsBuilder uriBuilder, 
+    @CurrentUser Usuario usuarioLogado
+  ) {
     
     Professor professor = service.getTeacherByUser(usuarioLogado.getId());
-
     Long subjectId = disciplinaService.validateSubjects(payload.getDisciplinas());
     
     if(subjectId > 0) {
@@ -82,8 +85,8 @@ public class ProfessorController {
     }
 
     ProfessorDto professorDto = service.save(payload, professor.getId(), professor.getUsuario());
-
     URI uri = uriBuilder.path("/professor/disciplinas/{id}").buildAndExpand(professorDto.getId()).toUri();
+
     return ResponseEntity.created(uri).body(professorDto);
   }
 }
