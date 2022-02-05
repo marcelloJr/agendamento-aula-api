@@ -1,15 +1,12 @@
 package com.marcello.agendamento_aula.controller.form;
 
 import java.time.LocalDate;
-
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
 
 import com.marcello.agendamento_aula.controller.unum.Role;
-import com.marcello.agendamento_aula.controller.unum.TipoUsuario;
 import com.marcello.agendamento_aula.model.Usuario;
 
 import org.hibernate.validator.constraints.Length;
@@ -30,7 +27,8 @@ public class UsuarioForm {
   private String nome;
 
   @NotNull(message = "Campo data de nascimento é obrigatório")
-  private LocalDate dataNascimento;
+  @Pattern(regexp="([12]\\d{3}-(0[1-9]|1[0-2])-(0[1-9]|[12]\\d|3[01]))", message="Data de nascimento inválida")
+  private String dataNascimento;
 
   @NotBlank(message = "Campo e-mail é obrigatório")
   @Email(message = "Campo e-mail precisa ser válido")
@@ -41,24 +39,18 @@ public class UsuarioForm {
   private String senha;
 
   @NotNull(message = "Campo tipo de usuário é obrigatório")
-  @Enumerated(EnumType.STRING)
-  private TipoUsuario tipoUsuario;
+  @Pattern(regexp = "^(?i)ALUNO|PROFESSOR$", message="Tipo de usuário inválido")
+  private String tipoUsuario;
 
   public UsuarioForm(Usuario usuario) {
     this.setNome(usuario.getNome());
-    this.setDataNascimento(usuario.getDataNascimento());
+    this.setDataNascimento(usuario.getDataNascimento().toString());
     this.setEmail(usuario.getEmail());
   }
 
   public Usuario converter() {
-    Role role;
-    
-    if(this.getTipoUsuario().equals(TipoUsuario.ALUNO)) {
-      role = Role.ROLE_ALUNO;
-    } else {
-      role = Role.ROLE_PROFESSOR;
-    }
+    Role role = this.getTipoUsuario().toLowerCase().equals("aluno") ? Role.ROLE_ALUNO : Role.ROLE_PROFESSOR;
 
-		return new Usuario(this.getNome(), this.getDataNascimento(), this.getEmail(), this.getSenha(), role);
+		return new Usuario(this.getNome(), LocalDate.parse(this.getDataNascimento()), this.getEmail(), this.getSenha(), role);
 	}
 }

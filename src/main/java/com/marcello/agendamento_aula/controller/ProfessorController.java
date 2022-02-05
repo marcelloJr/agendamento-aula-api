@@ -1,7 +1,6 @@
 package com.marcello.agendamento_aula.controller;
 
 import java.net.URI;
-import java.util.List;
 import java.util.Optional;
 import javax.transaction.Transactional;
 import javax.validation.Valid;
@@ -16,11 +15,13 @@ import com.marcello.agendamento_aula.model.Usuario;
 import com.marcello.agendamento_aula.service.DisciplinaService;
 import com.marcello.agendamento_aula.service.ProfessorService;
 import com.marcello.agendamento_aula.service.security.CurrentUser;
+import com.turkraft.springfilter.boot.Filter;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort.Direction;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -29,9 +30,10 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.util.UriComponentsBuilder;
+
+import springfox.documentation.annotations.ApiIgnore;
 
 @RestController
 @RequestMapping("/professor")
@@ -45,12 +47,10 @@ public class ProfessorController {
   @PreAuthorize("hasRole('ALUNO')")
   @GetMapping
 	public Page<UsuarioProfessorDto> getAll(
-    @RequestParam(required = false) String nome,
-    @RequestParam(required = false) List<Long> disciplinas,
+    @Filter Specification<Professor> filters,
     @PageableDefault(sort = "usuario.nome", direction = Direction.ASC, page = 0, size = 10) Pageable paginacao
   ) {
-    
-    Page<Professor> professores = service.getAll(nome, disciplinas, paginacao);
+    Page<Professor> professores = service.getAll(filters, paginacao);
 
     return UsuarioProfessorDto.convertToPage(professores);
 	}
@@ -74,7 +74,7 @@ public class ProfessorController {
   public ResponseEntity<?> saveSubjects(
     @RequestBody @Valid ProfessorDisciplinaForm payload, 
     UriComponentsBuilder uriBuilder, 
-    @CurrentUser Usuario usuarioLogado
+    @ApiIgnore @CurrentUser Usuario usuarioLogado
   ) {
     
     Professor professor = service.getTeacherByUser(usuarioLogado.getId());

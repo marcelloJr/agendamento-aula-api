@@ -1,6 +1,7 @@
 package com.marcello.agendamento_aula.controller;
 
 import java.net.URI;
+
 import static java.time.temporal.ChronoUnit.MINUTES;
 import java.util.Optional;
 
@@ -20,11 +21,13 @@ import com.marcello.agendamento_aula.model.Usuario;
 import com.marcello.agendamento_aula.service.AgendamentoService;
 import com.marcello.agendamento_aula.service.ProfessorService;
 import com.marcello.agendamento_aula.service.security.CurrentUser;
+import com.turkraft.springfilter.boot.Filter;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort.Direction;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.data.web.SortDefault;
 import org.springframework.data.web.SortDefault.SortDefaults;
@@ -38,6 +41,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.util.UriComponentsBuilder;
+
+import springfox.documentation.annotations.ApiIgnore;
 
 @RestController
 @RequestMapping("/agendamento")
@@ -55,13 +60,13 @@ public class AgendamentoController {
   public ResponseEntity<?> saveSchedule(
     @RequestBody @Valid AgendamentoForm payload, 
     UriComponentsBuilder uriBuilder,
-    @CurrentUser Usuario usuarioLogado
+    @ApiIgnore @CurrentUser Usuario usuarioLogado
   ) {
 
     Optional<Professor> professor = professorService.getById(payload.getProfessor());
 
     if(professor.isPresent()){
-      long validacaoHora = payload.getHoraInicio().until(payload.getHoraFim(), MINUTES);
+      long validacaoHora = payload.convertHoraInicio().until(payload.convertHoraFim(), MINUTES);
       
       if(validacaoHora < 0){
         return ResponseEntity.badRequest().body(new MensagemErroDto("A hora de início não pode ser menor que a do fim"));
@@ -82,7 +87,8 @@ public class AgendamentoController {
 
   @GetMapping
   public Page<AgendamentoDetailDto> getSchedules(
-    @CurrentUser Usuario usuarioLogado, 
+    @ApiIgnore @CurrentUser Usuario usuarioLogado, 
+    @Filter Specification<Agendamento> filters,
     @PageableDefault(page = 0, size = 10) 
     @SortDefaults({
       @SortDefault(sort = "data", direction = Direction.ASC),
@@ -93,16 +99,16 @@ public class AgendamentoController {
     Page<Agendamento> agendamentos;
 
     if(usuarioLogado.getPerfil().equals(Role.ROLE_ALUNO)) {
-      agendamentos = service.getAllStudentSchedule(usuarioLogado.getAluno(), paginacao);
+      agendamentos = service.getAllStudentSchedule(usuarioLogado.getAluno(), filters, paginacao);
     } else {
-      agendamentos = service.getAllTeacherSchedule(usuarioLogado.getProfessor(), paginacao);
+      agendamentos = service.getAllTeacherSchedule(usuarioLogado.getProfessor(), filters, paginacao);
     }
     
     return AgendamentoDetailDto.convertToPage(agendamentos);
   }
 
   @GetMapping("/{id}")
-	public ResponseEntity<AgendamentoDetailDto> getById(@CurrentUser Usuario usuarioLogado, @PathVariable Long id) {
+	public ResponseEntity<AgendamentoDetailDto> getById(@ApiIgnore @CurrentUser Usuario usuarioLogado, @PathVariable Long id) {
 
     Optional<Agendamento> agendamento = null;
 
@@ -121,7 +127,7 @@ public class AgendamentoController {
 
   @PatchMapping("/{id}")
 	public ResponseEntity<?> updateSchedule(
-    @CurrentUser Usuario usuarioLogado, 
+    @ApiIgnore @CurrentUser Usuario usuarioLogado, 
     @PathVariable Long id, 
     @RequestBody @Valid AgendamentoFormEdit payload
   ) {

@@ -21,6 +21,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.util.UriComponentsBuilder;
 
+import springfox.documentation.annotations.ApiIgnore;
+
 @RestController
 @RequestMapping("/usuario")
 public class UsuarioController {
@@ -43,7 +45,7 @@ public class UsuarioController {
   }
 
   @GetMapping("/meus-dados")
-  public ResponseEntity<UsuarioDetailDto> me(@CurrentUser Usuario usuarioLogado) {
+  public ResponseEntity<UsuarioDetailDto> me(@ApiIgnore @CurrentUser Usuario usuarioLogado) {
 
     UsuarioDetailDto usuario = service.getById(usuarioLogado.getId()).converterDetailDto();
 

@@ -10,11 +10,13 @@ import com.marcello.agendamento_aula.model.Professor;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
-public interface AgendamentoRepository extends JpaRepository<Agendamento, Long> {
+public interface AgendamentoRepository extends JpaRepository<Agendamento, Long>, JpaSpecificationExecutor<Agendamento> {
   @Query(
     "SELECT a FROM Agendamento a " +
     "WHERE a.status = 'CONFIRMADO' " +
@@ -41,4 +43,6 @@ public interface AgendamentoRepository extends JpaRepository<Agendamento, Long> 
   Optional<Agendamento> findByIdAndAluno(Long id, Aluno aluno);
 
   Optional<Agendamento> findByIdAndProfessor(Long id, Professor professor);
+
+  Page<Agendamento> findByAluno(Aluno aluno, Specification<Agendamento> spec, Pageable paginacao);
 }

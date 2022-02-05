@@ -15,6 +15,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
 import com.marcello.agendamento_aula.controller.unum.StatusAgendamento;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.marcello.agendamento_aula.controller.dto.AgendamentoDetailDto;
 import com.marcello.agendamento_aula.controller.dto.AgendamentoDto;
 import com.marcello.agendamento_aula.controller.form.AgendamentoForm;
@@ -47,9 +48,11 @@ public class Agendamento {
   private LocalDate data;
 
   @Column(nullable = false)
+  @JsonFormat(pattern = "HH:mm")
   private LocalTime horaInicio;
 
   @Column(nullable = false)
+  @JsonFormat(pattern = "HH:mm")
   private LocalTime horaFim;
   
   private String observacaoProfessor;
@@ -69,9 +72,9 @@ public class Agendamento {
     this.setAluno(aluno);
     this.setProfessor(professor);
     this.setData(agendamentoForm.getData());
-    this.setHoraInicio(agendamentoForm.getHoraInicio());
-    this.setHoraFim(agendamentoForm.getHoraFim());
     this.setObservacaoAluno(agendamentoForm.getObservacao());
+    this.setHoraInicio(LocalTime.parse(agendamentoForm.getHoraInicio()));
+    this.setHoraFim(LocalTime.parse(agendamentoForm.getHoraFim()));
     this.setStatus(status);
   }
 
@@ -81,5 +84,5 @@ public class Agendamento {
 
   public AgendamentoDetailDto converterToAgendamentoDetailDto() {
 		return new AgendamentoDetailDto(this);
-  }
+  } 
 }

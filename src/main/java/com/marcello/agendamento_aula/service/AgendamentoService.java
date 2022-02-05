@@ -13,6 +13,7 @@ import com.marcello.agendamento_aula.repository.AgendamentoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -32,16 +33,16 @@ public class AgendamentoService {
   }
 
   public Boolean hasSchedulingConflict(AgendamentoForm agendamentoForm) {
-    return agendamentoRepository.validaAgendamento(agendamentoForm.getData(), agendamentoForm.getHoraInicio(), 
-      agendamentoForm.getHoraFim(), agendamentoForm.getProfessor()).isPresent();
+    return agendamentoRepository.validaAgendamento(agendamentoForm.getData(), agendamentoForm.convertHoraInicio(), 
+      agendamentoForm.convertHoraFim(), agendamentoForm.getProfessor()).isPresent();
   }
 
-  public Page<Agendamento> getAllStudentSchedule(Aluno aluno, Pageable paginacao) {
-    return agendamentoRepository.findByAluno(aluno, paginacao);
-  } 
+  public Page<Agendamento> getAllStudentSchedule(Aluno aluno, Specification<Agendamento> filters, Pageable paginacao) {
+    return agendamentoRepository.findAll(Specification.where(filters).and(andStudent(aluno)), paginacao);
+  }  
 
-  public Page<Agendamento> getAllTeacherSchedule(Professor professor, Pageable paginacao) {
-    return agendamentoRepository.findByProfessor(professor, paginacao);
+  public Page<Agendamento> getAllTeacherSchedule(Professor professor, Specification<Agendamento> filters, Pageable paginacao) {
+    return agendamentoRepository.findAll(Specification.where(filters).and(andTeacher(professor)), paginacao);
   }
 
   public Optional<Agendamento> getById(Long id, Aluno aluno) {
@@ -73,4 +74,11 @@ public class AgendamentoService {
         (novoStatus.equals(CANCELADO) || novoStatus.equals(EXECUTADO)));
   }
 
+  private static Specification<Agendamento> andStudent(Aluno aluno) {
+    return (root, criteriaQuery, criteriaBuilder) -> criteriaBuilder.equal(root.get("aluno"), aluno);
+  }
+
+  private static Specification<Agendamento> andTeacher(Professor professor) {
+    return (root, criteriaQuery, criteriaBuilder) -> criteriaBuilder.equal(root.get("professor"), professor);
+  }
 }

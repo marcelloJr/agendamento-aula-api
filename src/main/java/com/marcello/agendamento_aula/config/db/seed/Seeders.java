@@ -1,6 +1,5 @@
 package com.marcello.agendamento_aula.config.db.seed;
 
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashSet;
@@ -8,7 +7,6 @@ import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-import com.marcello.agendamento_aula.controller.unum.TipoUsuario;
 import com.marcello.agendamento_aula.controller.form.ProfessorDisciplinaForm;
 import com.marcello.agendamento_aula.controller.form.UsuarioForm;
 import com.marcello.agendamento_aula.model.Disciplina;
@@ -56,7 +54,7 @@ public class Seeders {
 
   public void alunoSeed() {
     if(alunoService.getAll().isEmpty()) {
-      usuarioService.save(new UsuarioForm("Aluno 01", LocalDate.of(2000, 10, 10), "aluno01@gmail.com", "aluno01@123", TipoUsuario.ALUNO));
+      usuarioService.save(new UsuarioForm("Aluno 01", "2000-10-10", "aluno01@gmail.com", "aluno01@123", "ALUNO"));
     }
   }
 
@@ -65,7 +63,7 @@ public class Seeders {
       List<UsuarioForm> professores = new ArrayList<UsuarioForm>();
       
       for(int i = 1; i <= 20; i++){
-        professores.add(new UsuarioForm("Professor 0" + i, LocalDate.of(1970 + i, 1, i), "professor0"+ i +"@gmail.com", "professor0"+ i +"@123", TipoUsuario.PROFESSOR));
+        professores.add(new UsuarioForm("Professor 0" + i, "1970-01-01", "professor0"+ i +"@gmail.com", "professor0"+ i +"@123", "PROFESSOR"));
       }
   
       usuarioService.saveAll(professores);

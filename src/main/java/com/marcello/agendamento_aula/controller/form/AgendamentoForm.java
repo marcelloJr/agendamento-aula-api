@@ -4,6 +4,7 @@ import java.time.LocalDate;
 import java.time.LocalTime;
 
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
 
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Getter;
@@ -25,7 +26,8 @@ public class AgendamentoForm {
     required = true
   )
   @NotNull(message = "O campo hora de inicio é obrigatório")
-  private LocalTime horaInicio;
+  @Pattern(regexp = "^(0[0-9]|1[0-9]|2[0-3]):[0-5][0-9]$", message = "Horário de início inválida")
+  private String horaInicio;
 
   @ApiModelProperty(
     dataType = "String", 
@@ -34,7 +36,16 @@ public class AgendamentoForm {
     required = true
   )
   @NotNull(message = "O campo hora do fim é obrigatório")
-  private LocalTime horaFim;
+  @Pattern(regexp = "^(0[0-9]|1[0-9]|2[0-3]):[0-5][0-9]$", message = "Horário de fim inválida")
+  private String horaFim;
 
   private String observacao;
+
+  public LocalTime convertHoraInicio() {
+    return LocalTime.parse(this.getHoraInicio());
+  }
+
+  public LocalTime convertHoraFim() {
+    return LocalTime.parse(this.getHoraFim());
+  }
 }
