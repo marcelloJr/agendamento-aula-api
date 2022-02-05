@@ -3,7 +3,6 @@ package com.marcello.agendamento_aula.service;
 import java.util.List;
 import java.util.Optional;
 
-import com.marcello.agendamento_aula.controller.unum.TipoUsuario;
 import com.marcello.agendamento_aula.controller.form.AuthForm;
 import com.marcello.agendamento_aula.controller.form.UsuarioForm;
 import com.marcello.agendamento_aula.model.Usuario;
@@ -33,9 +32,9 @@ public class UsuarioService {
 
     Usuario usuario = usuarioRepository.save(usuarioForm.converter());
 
-    if(usuarioForm.getTipoUsuario().equals(TipoUsuario.ALUNO)) {
+    if(usuarioForm.getTipoUsuario().equals("ALUNO")) {
       alunoService.save(usuario);
-    } else if (usuarioForm.getTipoUsuario().equals(TipoUsuario.PROFESSOR)) {
+    } else if (usuarioForm.getTipoUsuario().equals("PROFESSOR")) {
       professorService.save(usuario);
     }
 
