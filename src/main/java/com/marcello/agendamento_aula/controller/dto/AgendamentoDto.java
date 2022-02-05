@@ -23,7 +23,7 @@ public class AgendamentoDto {
     this.setData(agendamento.getData());
     this.setHoraInicio(agendamento.getHoraInicio());
     this.setHoraFim(agendamento.getHoraFim());
-    this.setObservacao(agendamento.getObservacao());
+    this.setObservacao(agendamento.getObservacaoAluno());
     this.setId(agendamento.getId());
   }
 }

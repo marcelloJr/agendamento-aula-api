@@ -37,4 +37,8 @@ public interface AgendamentoRepository extends JpaRepository<Agendamento, Long> 
   Page<Agendamento> findByAluno(Aluno aluno, Pageable paginacao);
 
   Page<Agendamento> findByProfessor(Professor professor, Pageable paginacao);
+
+  Optional<Agendamento> findByIdAndAluno(Long id, Aluno aluno);
+
+  Optional<Agendamento> findByIdAndProfessor(Long id, Professor professor);
 }

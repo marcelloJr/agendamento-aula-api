@@ -23,6 +23,7 @@ public class DisciplinaController {
 
   @GetMapping
 	public ResponseEntity<List<DisciplinaDto>> getAll() {
+		
 		List<DisciplinaDto> disciplinas = service.getAll().stream().map(DisciplinaDto::new).collect(Collectors.toList());
 
     return ResponseEntity.ok(disciplinas);
@@ -30,6 +31,7 @@ public class DisciplinaController {
 
   @GetMapping("/{id}")
 	public ResponseEntity<?> getById(@PathVariable Long id) {
+
 		Optional<Disciplina> disciplina = service.getById(id);
 
 		if (disciplina.isPresent()) {
