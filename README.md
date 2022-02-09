@@ -2,10 +2,10 @@
 Este projeto foi desenvolvido em [Spring Boot](https://spring.io/quickstart) na versão 2.6.3
 
 ## Configurações iniciais
-Primeiramente, é necessário ter no mínimo a versão 8 do Java
-[Versão Windows](https://www.oracle.com/java/technologies/downloads/#java8-windows)
-[Versão Linux - baseados em Debian](https://www.oracle.com/java/technologies/downloads/#java8-linux)
-[Versão MacOS](https://www.oracle.com/java/technologies/downloads/#java8-mac)
+Primeiramente, é necessário ter no mínimo a versão 8 do Java.
+[Versão Windows](https://www.oracle.com/java/technologies/downloads/#java8-windows).
+[Versão Linux - baseados em Debian](https://www.oracle.com/java/technologies/downloads/#java8-linux).
+[Versão MacOS](https://www.oracle.com/java/technologies/downloads/#java8-mac).
 
 Após a instalação do Java, precisamos configurar o banco de dados, que nesse caso é o [MySQL 8](https://dev.mysql.com/downloads/mysql/). Ao término da configuração do MySQL, crie um schema chamado `agendamento_aula` para que o Spring Boot possa criar as tabela e preencher com as seeds ao iniciar a aplicação.
 
