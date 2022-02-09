@@ -9,6 +9,8 @@ Primeiramente, é necessário ter no mínimo a versão 8 do Java.\
 
 Após a instalação do Java, precisamos configurar o banco de dados, que nesse caso é o [MySQL 8](https://dev.mysql.com/downloads/mysql/). Ao término da configuração do MySQL, crie um schema chamado `agendamento_aula` para que o Spring Boot possa criar as tabela e preencher com as seeds ao iniciar a aplicação.
 
+Modifique as propriedades `spring.datasource.username` e `spring.datasource.password` no arquivo [application.properties](https://github.com/marcelloJr/agendamento-aula-api/blob/main/src/main/resources/application.properties) para seu respectivo `usuário` e `senha` do MySQL.
+
 Ao iniciar a aplicação, consulte o swagger no endereço [http://localhost:8080/swagger-ui/#/](http://localhost:8080/swagger-ui/#/) para ter acesso aos endpoints.
 
 ## Dados padrões
