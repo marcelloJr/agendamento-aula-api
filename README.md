@@ -14,13 +14,14 @@ Ao iniciar a aplicação, consulte o swagger no endereço [http://localhost:8080
 ## Dados padrões
 Ao rodar a primeira vez a aplicação, alguns dados são semeados no banco:
 
----------------------------- Usuario -------------------------------\
 ```
-id    email                     nome               senha\
-1     aluno01@gmail.com         Aluno 01           aluno01@123\
-2     professor01@gmail.com     Professor 01       professor01@123\
-3     professor02@gmail.com     Professor 02       professor02@123\
--     -                         -                  -\
-20    professor019@gmail.com    Professor 019      professor019@123\
-21    professor020@gmail.com    Professor 020      professor020@123\
+                            Usuarios
+
+id    email                     nome               senha
+1     aluno01@gmail.com         Aluno 01           aluno01@123
+2     professor01@gmail.com     Professor 01       professor01@123
+3     professor02@gmail.com     Professor 02       professor02@123
+-     -                         -                  -
+20    professor019@gmail.com    Professor 019      professor019@123
+21    professor020@gmail.com    Professor 020      professor020@123
 ```
