@@ -36,6 +36,7 @@ public class UsuarioForm {
   private String email;
 
   @NotBlank(message = "Campo senha é obrigatório")
+  @Length(min = 8, max = 50)
   private String senha;
 
   @NotNull(message = "Campo tipo de usuário é obrigatório")
